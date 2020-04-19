@@ -136,7 +136,6 @@ class TResNet(nn.Module):
     def __init__(self, layers, in_chans=3, num_classes=1000, width_factor=1.0):
         super(TResNet, self).__init__()
 
-        # JIT layers
         space_to_depth = SpaceToDepthModule()
         anti_alias_layer = partial(AntiAliasDownsampleLayer)
         global_pool_layer = FastGlobalAvgPool2d(flatten=True)

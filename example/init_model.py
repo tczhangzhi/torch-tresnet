@@ -9,4 +9,4 @@ device = torch.device("cuda:2")
 model = model.to(device)
 
 inputs = torch.randn([32, 3, 224, 224]).to(device)
-model(inputs)
+model(inputs).mean().backward()

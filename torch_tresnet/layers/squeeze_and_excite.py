@@ -9,7 +9,6 @@ class Flatten(nn.Module):
 
 
 class SEModule(nn.Module):
-
     def __init__(self, channels, reduction_channels, inplace=True):
         super(SEModule, self).__init__()
         self.avg_pool = FastGlobalAvgPool2d()
@@ -26,6 +25,7 @@ class SEModule(nn.Module):
         x_se = self.fc2(x_se2)
         x_se = self.activation(x_se)
         return x * x_se
+
 
 class hard_sigmoid(nn.Module):
     def __init__(self, inplace=True):
