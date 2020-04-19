@@ -256,10 +256,13 @@ def TResnetXL(num_classes, in_chans=3, remove_aa_jit=False):
 
 
 def _tresnet(arch, layers, pretrained, progress, **kwargs):
+    num_classes = kwargs['num_classes']
+    kwargs['num_classes'] = 1000
     model = TResNet(layers, **kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)['model']
         model.load_state_dict(state_dict)
+        model.head = nn.Sequential(OrderedDict([('fc', nn.Linear(model.num_features, num_classes))]))
     return model
 
 
