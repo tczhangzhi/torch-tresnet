@@ -6,13 +6,10 @@ import torch.nn.functional as F
 
 
 class AntiAliasDownsampleLayer(nn.Module):
-    def __init__(self, remove_aa_jit: bool = False, filt_size: int = 3, stride: int = 2,
+    def __init__(self, filt_size: int = 3, stride: int = 2,
                  channels: int = 0):
         super(AntiAliasDownsampleLayer, self).__init__()
-        if not remove_aa_jit:
-            self.op = DownsampleJIT(filt_size, stride, channels)
-        else:
-            self.op = Downsample(filt_size, stride, channels)
+        self.op = Downsample(filt_size, stride, channels)
 
     def forward(self, x):
         return self.op(x)
@@ -35,9 +32,7 @@ class DownsampleJIT(object):
 
     def __call__(self, input: torch.Tensor):
         if input.dtype != self.filt.dtype:
-            self.filt = self.filt.float() 
-        if input.device != self.filt.device:
-            self.filt = self.filt.to(input.device)
+            self.filt = self.filt.float()
         input_pad = F.pad(input, (1, 1, 1, 1), 'reflect')
         return F.conv2d(input_pad, self.filt, stride=2, padding=0, groups=input.shape[1])
 

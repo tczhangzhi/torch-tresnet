@@ -133,12 +133,12 @@ class Bottleneck(nn.Module):
 
 
 class TResNet(nn.Module):
-    def __init__(self, layers, in_chans=3, num_classes=1000, width_factor=1.0, remove_aa_jit=False):
+    def __init__(self, layers, in_chans=3, num_classes=1000, width_factor=1.0):
         super(TResNet, self).__init__()
 
         # JIT layers
         space_to_depth = SpaceToDepthModule()
-        anti_alias_layer = partial(AntiAliasDownsampleLayer, remove_aa_jit=remove_aa_jit)
+        anti_alias_layer = partial(AntiAliasDownsampleLayer)
         global_pool_layer = FastGlobalAvgPool2d(flatten=True)
 
         # TResnet stages
@@ -225,43 +225,13 @@ class TResNet(nn.Module):
         return logits
 
 
-def TResnetM(num_classes, in_chans=3, remove_aa_jit=False):
-    """ Constructs a medium TResnet model.
-    """
-    model = TResNet(layers=[3, 4, 11, 3], num_classes=num_classes, in_chans=in_chans, remove_aa_jit=remove_aa_jit)
-    return model
-
-
-def TResnetL(num_classes, in_chans=3, remove_aa_jit=False):
-    """ Constructs a large TResnet model.
-    """
-    model = TResNet(layers=[4, 5, 18, 3],
-                    num_classes=num_classes,
-                    in_chans=in_chans,
-                    width_factor=1.2,
-                    remove_aa_jit=remove_aa_jit)
-    return model
-
-
-def TResnetXL(num_classes, in_chans=3, remove_aa_jit=False):
-    """ Constructs an extra-large TResnet model.
-    """
-    model = TResNet(layers=[4, 5, 24, 3],
-                    num_classes=num_classes,
-                    in_chans=in_chans,
-                    width_factor=1.3,
-                    remove_aa_jit=remove_aa_jit)
-
-    return model
-
-
 def _tresnet(arch, layers, pretrained, progress, **kwargs):
     num_classes = kwargs['num_classes']
     kwargs['num_classes'] = 1000
     model = TResNet(layers, **kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)['model']
-        model.load_state_dict(state_dict)
+        model.load_state_dict(state_dict, strict=False)
         model.head = nn.Sequential(OrderedDict([('fc', nn.Linear(model.num_features, num_classes))]))
     return model
 
