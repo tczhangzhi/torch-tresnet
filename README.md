@@ -24,14 +24,14 @@ Follow the grammatical conventions of torchvision
 from torch_tresnet import tresnet_m, tresnet_l, tresnet_xl, tresnet_m_448, tresnet_l_448, tresnet_xl_448
 
 # pretrianed on 224*224
-model = tresnet_m(pretrain=True)
-model = tresnet_m(pretrain=True, num_classes=10)
-model = tresnet_m(pretrain=True, num_classes=10, in_chans=3)
+model = tresnet_m(pretrained=True)
+model = tresnet_m(pretrained=True, num_classes=10)
+model = tresnet_m(pretrained=True, num_classes=10, in_chans=3)
 
 # pretrianed on 448*448
-model = tresnet_m_448(pretrain=True)
-model = tresnet_m_448(pretrain=True, num_classes=10)
-model = tresnet_m_448(pretrain=True, num_classes=10, in_chans=3)
+model = tresnet_m_448(pretrained=True)
+model = tresnet_m_448(pretrained=True, num_classes=10)
+model = tresnet_m_448(pretrained=True, num_classes=10, in_chans=3)
 ```
 
 ## Main Results

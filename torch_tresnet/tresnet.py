@@ -258,7 +258,7 @@ def TResnetXL(num_classes, in_chans=3, remove_aa_jit=False):
 def _tresnet(arch, layers, pretrained, progress, **kwargs):
     model = TResNet(layers, **kwargs)
     if pretrained:
-        state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)
+        state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)['model']
         model.load_state_dict(state_dict)
     return model
 
