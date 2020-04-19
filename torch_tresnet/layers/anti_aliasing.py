@@ -29,9 +29,9 @@ class Downsample(nn.Module):
         filt = (a[:, None] * a[None, :])
         filt = filt / torch.sum(filt)
 
-        # self.filt = filt[None, None, :, :].repeat((self.channels, 1, 1, 1))
-        self.register_buffer('filt', filt[None, None, :, :].repeat((self.channels, 1, 1, 1)))
+        self.filt = filt[None, None, :, :].repeat((self.channels, 1, 1, 1))
+        # self.register_buffer('filt', filt[None, None, :, :].repeat((self.channels, 1, 1, 1)))
 
     def forward(self, input):
         input_pad = F.pad(input, (1, 1, 1, 1), 'reflect')
-        return F.conv2d(input_pad, self.filt, stride=self.stride, padding=0, groups=input.shape[1])
+        return F.conv2d(input_pad, self.filt.to(input.device), stride=self.stride, padding=0, groups=input.shape[1])

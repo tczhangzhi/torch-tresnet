@@ -225,13 +225,13 @@ class TResNet(nn.Module):
 
 
 def _tresnet(arch, layers, pretrained, progress, **kwargs):
-    num_classes = kwargs['num_classes']
-    kwargs['num_classes'] = 1000
     model = TResNet(layers, **kwargs)
     if pretrained:
         state_dict = load_state_dict_from_url(model_urls[arch], progress=progress)['model']
+        if kwargs.get('num_classes', 1000) != 1000:
+            del state_dict['head.fc.weight']
+            del state_dict['head.fc.bias']
         model.load_state_dict(state_dict, strict=False)
-        model.head = nn.Sequential(OrderedDict([('fc', nn.Linear(model.num_features, num_classes))]))
     return model
 
 
