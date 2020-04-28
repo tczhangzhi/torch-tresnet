@@ -33,6 +33,7 @@ model = tresnet_m_448(pretrained=True)
 model = tresnet_m_448(pretrained=True, num_classes=10)
 model = tresnet_m_448(pretrained=True, num_classes=10, in_chans=3)
 ```
+For a demonstration of training and testing, please see the [jupyter notebook](https://github.com/tczhangzhi/torch-tresnet/blob/master/example/quickstart.ipynb), which is an unofficial implementation, please do not use this implementation as the final evaluation standard
 
 ## Main Results
 #### TResNet Models
