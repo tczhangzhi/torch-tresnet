@@ -28,7 +28,7 @@ class PyTest(TestCommand):
 
 
 setup(name='torch_tresnet',
-      version='1.0.7',
+      version='1.0.8',
       license='MIT',
       description="TResNet: High Performance GPU-Dedicated Architecture",
       long_description=readme(),

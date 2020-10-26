@@ -262,10 +262,10 @@ def tresnet_m_448(pretrained=False, progress=True, **kwargs):
 def tresnet_l_448(pretrained=False, progress=True, **kwargs):
     """ Constructs a large TResnet model.
     """
-    return _tresnet('tresnet_m_448', [4, 5, 18, 3], pretrained, progress, width_factor=1.2, **kwargs)
+    return _tresnet('tresnet_l_448', [4, 5, 18, 3], pretrained, progress, width_factor=1.2, **kwargs)
 
 
 def tresnet_xl_448(pretrained=False, progress=True, **kwargs):
     """ Constructs an extra-large TResnet model.
     """
-    return _tresnet('tresnet_m_448', [4, 5, 24, 3], pretrained, progress, width_factor=1.3, **kwargs)
+    return _tresnet('tresnet_xl_448', [4, 5, 24, 3], pretrained, progress, width_factor=1.3, **kwargs)
